@@ -1,16 +1,19 @@
 import type { Metadata } from 'next'
+import { ClerkProvider } from '@clerk/nextjs'
 
 export const metadata: Metadata = {
   title: 'aliceqi.com | BlackRoad OS',
   description: 'Your quantum-native AI assistant for the modern age.',
 }
 
+const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
+  const body = (
     <html lang="en">
       <head>
         <link rel="icon" href="https://blackroad.io/favicon.ico" />
@@ -32,4 +35,8 @@ export default function RootLayout({
       </body>
     </html>
   )
+
+  if (!publishableKey) return body
+
+  return <ClerkProvider publishableKey={publishableKey}>{body}</ClerkProvider>
 }
