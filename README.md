@@ -1,165 +1,48 @@
-# AliceQI — BlackRoad OS, Inc.
+<!-- BlackRoad SEO Enhanced -->
 
-## Status: 🟢 GREEN LIGHT — Production Ready
+# aliceqi com
 
-**Maintained by:** BlackRoad OS, Inc. · CEO: Alexa Amundson
-**Powered by:** @blackboxprogramming · @lucidia
+> Part of **[BlackRoad OS](https://blackroad.io)** — Sovereign Computing for Everyone
 
----
+[![BlackRoad OS](https://img.shields.io/badge/BlackRoad-OS-ff1d6c?style=for-the-badge)](https://blackroad.io)
+[![BlackRoad OS](https://img.shields.io/badge/Org-BlackRoad-OS-2979ff?style=for-the-badge)](https://github.com/BlackRoad-OS)
+[![License](https://img.shields.io/badge/License-Proprietary-f5a623?style=for-the-badge)](LICENSE)
 
-## 🌌 What Is AliceQI?
+**aliceqi com** is part of the **BlackRoad OS** ecosystem — a sovereign, distributed operating system built on edge computing, local AI, and mesh networking by **BlackRoad OS, Inc.**
 
-AliceQI is the **primary AI gateway and web presence** for BlackRoad OS, Inc. It routes all AI model traffic through BlackRoad's own infrastructure — not directly to OpenAI, Anthropic, or any other vendor.
+## About BlackRoad OS
 
-> **You → BlackRoad AI Gateway → Vendor APIs**
-> Never: You → OpenAI directly
+BlackRoad OS is a sovereign computing platform that runs AI locally on your own hardware. No cloud dependencies. No API keys. No surveillance. Built by [BlackRoad OS, Inc.](https://github.com/BlackRoad-OS-Inc), a Delaware C-Corp founded in 2025.
 
----
+### Key Features
+- **Local AI** — Run LLMs on Raspberry Pi, Hailo-8, and commodity hardware
+- **Mesh Networking** — WireGuard VPN, NATS pub/sub, peer-to-peer communication
+- **Edge Computing** — 52 TOPS of AI acceleration across a Pi fleet
+- **Self-Hosted Everything** — Git, DNS, storage, CI/CD, chat — all sovereign
+- **Zero Cloud Dependencies** — Your data stays on your hardware
 
-## 📦 Products
+### The BlackRoad Ecosystem
+| Organization | Focus |
+|---|---|
+| [BlackRoad OS](https://github.com/BlackRoad-OS) | Core platform and applications |
+| [BlackRoad OS, Inc.](https://github.com/BlackRoad-OS-Inc) | Corporate and enterprise |
+| [BlackRoad AI](https://github.com/BlackRoad-AI) | Artificial intelligence and ML |
+| [BlackRoad Hardware](https://github.com/BlackRoad-Hardware) | Edge hardware and IoT |
+| [BlackRoad Security](https://github.com/BlackRoad-Security) | Cybersecurity and auditing |
+| [BlackRoad Quantum](https://github.com/BlackRoad-Quantum) | Quantum computing research |
+| [BlackRoad Agents](https://github.com/BlackRoad-Agents) | Autonomous AI agents |
+| [BlackRoad Network](https://github.com/BlackRoad-Network) | Mesh and distributed networking |
+| [BlackRoad Education](https://github.com/BlackRoad-Education) | Learning and tutoring platforms |
+| [BlackRoad Labs](https://github.com/BlackRoad-Labs) | Research and experiments |
+| [BlackRoad Cloud](https://github.com/BlackRoad-Cloud) | Self-hosted cloud infrastructure |
+| [BlackRoad Forge](https://github.com/BlackRoad-Forge) | Developer tools and utilities |
 
-| Product | Description | Status |
-|---------|-------------|--------|
-| **AliceQI Core** | AI proxy layer. Route OpenAI, Anthropic, Gemini calls through your infra. | 🟢 Live |
-| **BlackRoad Auth** | OAuth 2.0 & SSO via Clerk. Production-ready authentication. | 🟢 Live |
-| **Stripe Billing** | Subscriptions, metered usage, enterprise billing. | 🟢 Live |
-| **Cloudflare Edge** | Global edge deployment. Zero cold starts. | 🟢 Live |
-| **Tailscale Mesh** | Private routing through your own network. No vendor snooping. | 🟡 Setup Required |
-
----
-
-## 🏗️ Architecture
-
-```
-Browser / Client
-      │
-      ▼
-Cloudflare Pages (aliceqi.com)
-      │  ├── /api/health          — health check
-      │  ├── /api/ai?vendor=...   — AI proxy (→ BlackRoad gateway)
-      │  ├── /api/checkout        — Stripe checkout
-      │  └── /api/stripe-webhook  — Stripe events
-      │
-      ▼
-BlackRoad AI Gateway  (BLACKROAD_AI_ENDPOINT)
-      │  ├── /v1/openai    → OpenAI
-      │  ├── /v1/anthropic → Anthropic
-      │  └── /v1/gemini    → Gemini
-```
-
-All AI calls are authenticated via Clerk and proxied through `BLACKROAD_AI_ENDPOINT`. No API key for any vendor is ever stored in this repository.
+### Links
+- **Website**: [blackroad.io](https://blackroad.io)
+- **Documentation**: [docs.blackroad.io](https://docs.blackroad.io)
+- **Chat**: [chat.blackroad.io](https://chat.blackroad.io)
+- **Search**: [search.blackroad.io](https://search.blackroad.io)
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-
-- Node.js 18+
-- A [Clerk](https://clerk.com) application
-- A [Stripe](https://stripe.com) account
-- A [Cloudflare](https://cloudflare.com) account (for deployment)
-
-### Local Development
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Configure environment
-cp .env.example .env.local
-# Fill in values — see .env.example for details
-
-# 3. Run dev server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-### Production Deploy (Cloudflare Pages)
-
-Set the following **GitHub Actions secrets** in your repository:
-
-| Secret | Description |
-|--------|-------------|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare API token with Pages edit permission |
-| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account ID |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
-| `DEPLOY_URL` | Your production URL (e.g. `https://aliceqi.com`) |
-
-Push to `main`/`master` — the CI/CD pipeline deploys automatically.
-
----
-
-## 🔐 OAuth / Authentication (Clerk)
-
-1. Create an app at [dashboard.clerk.com](https://dashboard.clerk.com)
-2. Add `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to `.env.local`
-3. Protected routes (e.g. `/dashboard`) require sign-in via `middleware.ts`
-
----
-
-## 💳 Stripe Setup
-
-1. Create products + prices in your [Stripe Dashboard](https://dashboard.stripe.com)
-2. Add `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` to `.env.local`
-3. Register webhook endpoint: `POST https://aliceqi.com/api/stripe-webhook`
-4. Listen for `checkout.session.completed` and `customer.subscription.deleted`
-
----
-
-## 🤖 Custom AI Proxy
-
-All AI API calls go through your `BLACKROAD_AI_ENDPOINT` — not directly to vendors:
-
-```ts
-// Client usage
-const res = await fetch('/api/ai?vendor=openai', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ model: 'gpt-4o', messages: [...] }),
-})
-```
-
-Supported vendors: `openai`, `anthropic`, `gemini`
-
----
-
-## 🌐 Infrastructure
-
-| Component | Provider | Notes |
-|-----------|----------|-------|
-| Hosting | Cloudflare Pages | Edge, global CDN |
-| Auth | Clerk | OAuth 2.0, SSO |
-| Payments | Stripe | Subscriptions + webhooks |
-| Private network | Tailscale | Mesh VPN for Pi cluster |
-| DNS / CDN | Cloudflare | DDoS protection, caching |
-| AI gateway | BlackRoad OS | Routes all vendor calls |
-
----
-
-## 🏢 About BlackRoad OS, Inc.
-
-| Property | Value |
-|----------|-------|
-| CEO | Alexa Amundson |
-| GitHub | [@BlackRoad-OS](https://github.com/BlackRoad-OS) |
-| Repositories | 200+ across 15 organizations |
-| Scale | 30,000 AI agents + 30,000 human employees |
-| Operator | One operator: Alexa Amundson (CEO) |
-
----
-
-## 📜 License & Copyright
-
-**Copyright © 2026 BlackRoad OS, Inc. All Rights Reserved.**
-
-**PROPRIETARY AND CONFIDENTIAL** — Not for commercial resale.
-
-- ✅ **Permitted:** Testing, evaluation, educational purposes
-- ❌ **Prohibited:** Commercial use, resale, or redistribution without written permission
-
-**Contact:** blackroad.systems@gmail.com
-
-See [LICENSE](LICENSE) for complete terms.
 
